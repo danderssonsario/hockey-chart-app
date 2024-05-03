@@ -198,6 +198,7 @@ export class PanelComponent {
 
   async onInputChange(event: any) {
     const data = await this.#fetchChartData(event.target.value);
+    console.log(data);
   }
 
   async #fetchChartData(param: string): Promise<any> {
