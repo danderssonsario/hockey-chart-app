@@ -1,0 +1,64 @@
+.example-action-buttons {
+  padding-bottom: 0px;
+}
+
+.example-headers-align .mat-expansion-panel-header-description {
+  justify-content: space-between;
+  align-items: center;
+}
+
+.example-headers-align .mat-mdc-form-field + .mat-mdc-form-field {
+  margin-left: 8px;
+}
+
+.container {
+  max-width: 100%;
+  margin: 10px auto;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  
+}
+
+.example-button-container {
+  display: flex;
+  justify-content: center;
+  width: 50;
+  margin: 5px;
+}
+
+.chip {
+  display: inline;
+
+}
+
+.button {
+  margin: auto 5px;
+  background-color: #83a1c9;
+}
+.chip-container {
+  display: flex;
+  flex-direction: column;
+  flex: none;
+}
+
+.filter-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.filter-row {
+  display: flex;
+  flex-direction: row;
+}
+
+app-slider {
+  margin: 0 auto;
+}
+
+#right {
+  float: right;
+}

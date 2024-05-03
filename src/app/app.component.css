@@ -1,0 +1,23 @@
+﻿.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+app-header {
+    width: 100vw;
+}
+
+app-panel, app-scatter-chart {
+    width: 70%;
+}
+
+mat-card {
+    width: 50%;
+}
+
+* {
+ margin: 0;
+ padding: 0;
+}

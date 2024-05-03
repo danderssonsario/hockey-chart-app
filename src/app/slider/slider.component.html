@@ -1,0 +1,7 @@
+<div class="container">
+<mat-card-header>{{data.header}}</mat-card-header>
+<mat-slider min={{data.min}} max={{data.max}} step={{data.step}} discrete [displayWith]="formatLabel">
+  <input (change)="onChange($event)" name="start" value={{data.start}} matSliderStartThumb>
+  <input (change)="onChange($event)" name="end" value={{data.end}} matSliderEndThumb>
+</mat-slider>
+</div>

@@ -1,0 +1,140 @@
+<div class="container">
+<div class="example-action-buttons">
+  <button mat-button (click)="accordion.openAll()">Expand All</button>
+  <button mat-button (click)="accordion.closeAll()">Collapse All</button>
+  <button id="right" mat-button (click)="handleReset()">Reset All</button>
+</div>
+<mat-accordion class="example-headers-align" multi>
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        Player search
+      </mat-panel-title>
+      <mat-panel-description>
+        Type your favorite player's name
+        <mat-icon>account_circle</mat-icon>
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+
+    <div class="chip-container">
+      
+    <div class="chip">
+      <mat-form-field   class="example-chip-list">
+  <mat-label>Name </mat-label>
+  <mat-chip-grid #chipGrid aria-label="Enter names">
+      
+    <input placeholder="e.g Jason Robertson" #nameInput [formControl]="nameCtrl"
+           [matChipInputFor]="chipGrid"
+           [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+           [matChipInputAddOnBlur]="addOnBlur"
+           (matChipInputTokenEnd)="add({key: 'shooterName', value: $event.value, chipInput: $event.chipInput})"
+           name="shooterName"
+           (input)="onInputChange($event)"
+           />
+    <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
+      @for (name of filteredNames | async; track name) {
+        <mat-option [value]="name">{{name}}</mat-option>
+      }
+    </mat-autocomplete>
+           
+  </mat-chip-grid>
+</mat-form-field>
+
+  <button  class="button" mat-mini-fab matTooltip="Primary" aria-label="Example mini fab with a search icon" fontIcon="search">
+    <mat-icon>search</mat-icon>
+  </button>
+      </div>
+
+      <div class="chip-row">
+    <mat-chip-row *ngIf="displayChip"
+        (removed)="remove()">
+        {{searchdata.shooterName}}
+        <button matChipRemove [attr.aria-label]="'remove ' + searchdata.shooterName">
+          <mat-icon>cancel</mat-icon>
+        </button>
+      </mat-chip-row>
+
+      </div>
+    
+    </div>
+
+  </mat-expansion-panel>
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        Filters
+      </mat-panel-title>
+      <mat-panel-description>
+        Apply filters
+        <mat-icon>filter</mat-icon>
+      </mat-panel-description>
+
+
+    </mat-expansion-panel-header>
+
+
+<div class="filter-container">
+  <div class="filter-row">
+<mat-form-field>
+  <mat-label>Period</mat-label>
+  <mat-select [value]="searchdata.period" (selectionChange)="onPanelChange({ key: 'period', value : $event.value })">
+    <mat-option value="1">First</mat-option>
+    <mat-option value="2">Second</mat-option>
+    <mat-option value="3">Third</mat-option>
+  </mat-select>
+</mat-form-field>
+
+<mat-form-field>
+  <mat-label>Shoots</mat-label>
+  <mat-select [value]="searchdata.shooterLeftRight" (selectionChange)="onPanelChange({ key: 'shooterLeftRight', value : $event.value })">
+    <mat-option value="L">Left</mat-option>
+    <mat-option value="R">Right</mat-option>
+  </mat-select>
+</mat-form-field>
+
+<mat-form-field>
+  <mat-label>Shot Type</mat-label>
+  <mat-select [value]="searchdata.shotType" (selectionChange)="onPanelChange({ key: 'shotType', value : $event.value })">
+    <mat-option value="SLAP">Slap</mat-option>
+    <mat-option value="WRIST">Wrist</mat-option>
+    <mat-option value="SNAP">Snap</mat-option>
+    <mat-option value="TIP">Tip</mat-option>
+    <mat-option value="BACK">Backhand</mat-option>
+    <mat-option value="DEFL">Deflection</mat-option>
+  </mat-select>
+</mat-form-field>
+</div>
+
+<div class="filter-row">
+<app-slider (sliderChange)="onPanelChange($event)" [data]="{key:'arenaAdjustedShotDistance', header: 'Distance (ft)', min: '0', max: '200', step: '1', start: searchdata.arenaAdjustedShotDistance.start, end: searchdata.arenaAdjustedShotDistance.end}" ></app-slider>
+<app-slider (sliderChange)="onPanelChange($event)" [data]="{key:'shotAngleAdjusted', header: 'ShotAngle (deg)', min: '0', max: '180', step: '1', start: searchdata.shotAngleAdjusted.start, end: searchdata.shotAngleAdjusted.end}" ></app-slider>
+<app-slider (sliderChange)="onPanelChange($event)" [data]="{key: 'time', header: 'Time (min)', min: '0', max: '80', step: '1', start: searchdata.time.start, end: searchdata.time.end}" ></app-slider>
+</div>
+
+</div>
+
+
+  </mat-expansion-panel>
+
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        Facets
+      </mat-panel-title>
+      <mat-panel-description>
+        Refine your search results
+        <mat-icon>check_box</mat-icon>
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+        <div class="row">
+          <mat-slide-toggle [checked]="searchdata.shotRebound" (change)="onPanelChange({ key: 'shotRebound', value: $event.checked})">Of Rebound ({{ofReboundFacet?.count || 0}})</mat-slide-toggle>
+          <mat-slide-toggle [checked]="searchdata.shotOnEmptyNet" (change)="onPanelChange({ key: 'shotOnEmptyNet', value: $event.checked})">Empty Net ({{emptyNetFacet?.count || 0}})</mat-slide-toggle>
+          <mat-slide-toggle [checked]="searchdata.isPlayOffGame" (change)="onPanelChange({ key: 'isPlayOffGame', value: $event.checked})">Playoff game ({{playoffFacet?.count || 0}})</mat-slide-toggle>
+          <mat-slide-toggle [checked]="searchdata.isPowerPlay" (change)="onPanelChange({ key: 'isPowerPlay', value: $event.checked})">PowerPlay ({{powerplayFacet?.count || 0}})</mat-slide-toggle>
+          <mat-slide-toggle [checked]="searchdata.isBoxPlay" (change)="onPanelChange({ key: 'isBoxPlay', value: $event.checked})">BoxPlay ({{boxplayFacet?.count || 0}})</mat-slide-toggle>
+        </div>
+  </mat-expansion-panel>
+
+  
+</mat-accordion>
+</div>
