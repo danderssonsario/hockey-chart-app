@@ -5,12 +5,20 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
-import {COMMA, ENTER} from '@angular/cdk/keycodes';
+import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { MatChipsModule } from '@angular/material/chips';
 import { NgIf } from '@angular/common';
-import {MatSelectModule} from '@angular/material/select';
+import { MatSelectModule } from '@angular/material/select';
 import { SliderComponent } from '../slider/slider.component';
-import { Component, ElementRef, Input, ViewChild, EventEmitter, Output, SimpleChanges } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  Input,
+  ViewChild,
+  EventEmitter,
+  Output,
+  SimpleChanges,
+} from '@angular/core';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {
   MatAutocompleteSelectedEvent,
@@ -72,9 +80,6 @@ export class PanelComponent {
   addOnBlur = true;
   readonly separatorKeysCodes = [ENTER, COMMA] as const;
   displayChip = false;
-  nameCtrl = new FormControl('');
-  filteredNames: Observable<string[]>;
-  allNames: string[] = ['Apple', 'Lemon', 'Lime', 'Orange', 'Strawberry'];
 
   @ViewChild('nameInput')
   nameInput!: ElementRef<HTMLInputElement>;
@@ -85,20 +90,19 @@ export class PanelComponent {
   powerplayFacet: Facet | undefined;
   boxplayFacet: Facet | undefined;
   emptyNetFacet: Facet | undefined;
+  @Input() disabled: Boolean = false;
+  @Input() reset: Boolean = false;
 
   constructor() {
-    this.filteredNames = this.nameCtrl.valueChanges.pipe(
-      startWith(null),
-      map((name: string | null) =>
-        name ? this._filter(name) : this.allNames.slice()
-      )
-    );
     this.updateOfReboundCount();
   }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['facets'] && changes['facets'].currentValue) {
       this.updateOfReboundCount();
+    }
+    if (changes['reset'] && changes['reset'].currentValue) {
+      this.handleReset();
     }
   }
 
@@ -131,26 +135,11 @@ export class PanelComponent {
     }
 
     event.chipInput!.clear();
-    this.nameCtrl.setValue(null);
   }
 
   remove(): void {
     this.onPanelChange({ key: 'shooterName', value: '' });
     this.displayChip = false;
-  }
-
-  selected(event: MatAutocompleteSelectedEvent): void {
-    //this.names.push(event.option.viewValue);
-    this.nameInput.nativeElement.value = '';
-    this.nameCtrl.setValue(null);
-  }
-
-  private _filter(value: string): string[] {
-    const filterValue = value.toLowerCase();
-
-    return this.allNames.filter((name) =>
-      name.toLowerCase().includes(filterValue)
-    );
   }
 
   searchdata: SearchData = {
@@ -196,25 +185,4 @@ export class PanelComponent {
     this.changeEvent.emit(this.searchdata);
   }
 
-  async onInputChange(event: any) {
-    const data = await this.#fetchChartData(event.target.value);
-    console.log(data);
-  }
-
-  async #fetchChartData(param: string): Promise<any> {
-    try {
-      const response = await fetch(
-        `http://localhost:5207/indexes/goals/suggestions?searchText=${param}`
-      );
-
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
-      }
-
-      const data = await response.json();
-      return data;
-    } catch (error) {
-      throw error;
-    }
-  }
 }

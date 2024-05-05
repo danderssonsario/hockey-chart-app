@@ -13,7 +13,7 @@ app-panel, app-scatter-chart {
     width: 70%;
 }
 
-mat-card {
+mat-card-content {
     width: 50%;
 }
 

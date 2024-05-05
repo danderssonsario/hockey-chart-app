@@ -8,7 +8,6 @@ interface Data {
   arenaAdjustedYCordABS: string;
 }
 
-
 @Component({
   selector: 'app-scatter-chart',
   templateUrl: './scatter-chart.component.html',
@@ -35,8 +34,8 @@ export class ScatterChartComponent implements OnChanges {
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['chartData'] && this.chartData) {
       this.scatterChartDatasets[0].data = this.chartData.map((point) => ({
-        x: +point.arenaAdjustedXCordABS + 92,
-        y: +point.arenaAdjustedYCordABS + 44,
+        x: +point.arenaAdjustedXCordABS + 262,
+        y: +point.arenaAdjustedYCordABS + 50,
       }));
     }
     this.chart?.update()
@@ -60,7 +59,7 @@ export class ScatterChartComponent implements OnChanges {
       x: {
         display: false,
         min: 0,
-        max: 200,
+        max:400,
         grid: {
           display: false,
         },
@@ -68,7 +67,7 @@ export class ScatterChartComponent implements OnChanges {
       y: {
         display: false,
         min: 0,
-        max: 90,
+        max: 100,
         grid: {
           display: false,
         },

@@ -1,16 +1,14 @@
 ﻿<div class="container">
-<app-header></app-header>
-<app-panel [facets]="facets" #searchData (changeEvent)="receiveSearchData($event)"></app-panel>
+<app-header (teamSelectionChange)="getGoalsByTeam($event)"></app-header>
+<app-panel [reset]="resetPanel" [disabled]="disabledPanel" [facets]="facets" #searchData (changeEvent)="receiveSearchData($event)"></app-panel>
 
 @if (isLoading) {
-  <mat-card>
         <mat-card-content>
     <mat-card-header>Loading...</mat-card-header>
     <mat-progress-bar mode="indeterminate"></mat-progress-bar>
 
   </mat-card-content>
-  </mat-card>
-}
+} 
 
 
 <app-scatter-chart #elseBlock [chartData]="chartData"></app-scatter-chart>

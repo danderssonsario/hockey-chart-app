@@ -26,10 +26,6 @@ interface Data {
   arenaAdjustedYCordABS: string;
 }
 
-interface ChartData {
-  data: Data[];
-}
-
 interface Facet {
   field: string;
   value: string;
@@ -52,21 +48,23 @@ interface Facet {
 export class AppComponent {
   chartData: Data[] = [];
   facets: Facet[] = [];
+  selectedTeams: string[] = [];
   isLoading: boolean = false;
+  disabledPanel: Boolean = true;
+  selectedTeam: string = '';
+  resetPanel: Boolean = false;
 
-  async ngOnInit(): Promise<void> {
-    try {
-      this.isLoading = true;
-      const params = '';
-      const chartData = await this.#fetchChartData(params);
-      const facetData = await this.#fetchFacetData();
-      this.chartData = chartData;
-      this.facets = facetData;
-    } catch (error) {
-      console.error('Error fetching data:', error);
-    } finally {
-      this.isLoading = false;
+  async getGoalsByTeam(event: string) {
+    if (event !== null && event.length) {
+      this.disabledPanel = false
     }
+    this.selectedTeam = event
+    const queryObject = await this.#mapEventDataToQueryObject({ teamCode: event });
+    const params = await this.#buildQueryParams(queryObject);
+    const chartData = await this.#fetchChartData(params);
+
+    this.chartData = chartData;
+    this.facets = await this.#fetchFacetData()
   }
 
   async receiveSearchData(event: SearchData) {
@@ -82,7 +80,7 @@ export class AppComponent {
       this.isLoading = true;
       const param = new URLSearchParams(params).toString();
       const response = await fetch(
-        `http://localhost:5207/indexes/goals?${param}`
+        `https://api20240419093055.azurewebsites.net/indexes/goals?${param}`
       );
 
       if (!response.ok) {
@@ -102,7 +100,7 @@ export class AppComponent {
     try {
       this.isLoading = true;
       const response = await fetch(
-        `http://localhost:5207/indexes/goals/facets`
+        `https://api20240419093055.azurewebsites.net/indexes/goals/facets?teamCode=${this.selectedTeam}`
       );
 
       if (!response.ok) {
@@ -159,8 +157,9 @@ export class AppComponent {
     return queryParams;
   }
 
-  async #mapEventDataToQueryObject(event: SearchData): Promise<QueryObject> {
+  async #mapEventDataToQueryObject(event: any): Promise<QueryObject> {
     const queryObject: QueryObject = {
+      TeamCode: this.selectedTeam,
       ShooterName: event.shooterName || '',
       Period: event.period || '',
       ShooterLeftRight: event.shooterLeftRight || '',
