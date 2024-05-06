@@ -19,13 +19,11 @@ import {
   Output,
   SimpleChanges,
 } from '@angular/core';
-import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {
-  MatAutocompleteSelectedEvent,
   MatAutocompleteModule,
 } from '@angular/material/autocomplete';
-import { Observable } from 'rxjs';
-import { map, startWith } from 'rxjs/operators';
+
 import { AsyncPipe } from '@angular/common';
 
 export interface SearchData {
@@ -50,6 +48,10 @@ interface Facet {
   count?: number;
 }
 
+/**
+ * PanelComponent represents the panel component of the application.
+ * It provides a panel for users to apply search filters and emits the search data when changes occur.
+ */
 @Component({
   selector: 'app-panel',
   templateUrl: './panel.component.html',
@@ -94,19 +96,29 @@ export class PanelComponent {
   @Input() reset: Boolean = false;
 
   constructor() {
-    this.updateOfReboundCount();
+    this.updateOfFacetCount();
   }
 
+  /**
+   * Lifecycle hook that is called when any input property changes.
+   * It updates the rebound count if facets change.
+   * It handles reset if reset input is true.
+   *
+   * @param changes - SimpleChanges object containing the changed properties
+   */
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['facets'] && changes['facets'].currentValue) {
-      this.updateOfReboundCount();
+      this.updateOfFacetCount();
     }
     if (changes['reset'] && changes['reset'].currentValue) {
       this.handleReset();
     }
   }
 
-  updateOfReboundCount(): void {
+  /**
+   * Updates the facets.
+   */
+  updateOfFacetCount(): void {
     this.ofReboundFacet = this.facets.find(
       (facet) => facet.field === 'ShotRebound' && facet.value === 'True'
     );
@@ -126,6 +138,11 @@ export class PanelComponent {
 
   @Output() changeEvent = new EventEmitter<SearchData>();
 
+  /**
+   * Adds a chip based on user input.
+   *
+   * @param event - Event containing the chip value
+   */
   add(event: any): void {
     const value = (event.value || '').trim();
 
@@ -137,6 +154,9 @@ export class PanelComponent {
     event.chipInput!.clear();
   }
 
+  /**
+   * Removes the chip.
+   */
   remove(): void {
     this.onPanelChange({ key: 'shooterName', value: '' });
     this.displayChip = false;
@@ -147,8 +167,8 @@ export class PanelComponent {
     period: '',
     shooterLeftRight: '',
     shotType: '',
-    arenaAdjustedShotDistance: { start: '0', end: '200' },
-    shotAngleAdjusted: { start: '0', end: '180' },
+    arenaAdjustedShotDistance: { start: '0', end: '100' },
+    shotAngleAdjusted: { start: '0', end: '90' },
     time: { start: '0', end: '80' },
     isPowerPlay: false,
     isBoxPlay: false,
@@ -157,6 +177,9 @@ export class PanelComponent {
     shotRebound: false,
   };
 
+  /**
+   * Handles the reset operation by resetting the search data and emitting changes.
+   */
   handleReset(): void {
     this.displayChip = false;
     this.searchdata = {
@@ -164,8 +187,8 @@ export class PanelComponent {
       period: '',
       shooterLeftRight: '',
       shotType: '',
-      arenaAdjustedShotDistance: { start: '0', end: '200' },
-      shotAngleAdjusted: { start: '0', end: '180' },
+      arenaAdjustedShotDistance: { start: '0', end: '100' },
+      shotAngleAdjusted: { start: '0', end: '90' },
       time: { start: '0', end: '80' },
       isPowerPlay: false,
       isBoxPlay: false,
@@ -176,6 +199,11 @@ export class PanelComponent {
     this.changeEvent.emit(this.searchdata);
   }
 
+  /**
+   * Handles the change event when a panel item changes.
+   *
+   * @param event - Event object containing the changed data
+   */
   onPanelChange(event: any): void {
     this.searchdata = {
       ...this.searchdata,
@@ -184,5 +212,4 @@ export class PanelComponent {
 
     this.changeEvent.emit(this.searchdata);
   }
-
 }

@@ -27,7 +27,7 @@
   <mat-label>Name </mat-label>
   <mat-chip-grid #chipGrid aria-label="Enter names">
       
-    <input placeholder="e.g Jason Robertson" #nameInput 
+    <input placeholder="" #nameInput 
            [matChipInputFor]="chipGrid"
            [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
            [matChipInputAddOnBlur]="addOnBlur"
@@ -106,8 +106,8 @@
 </div>
 
 <div class="filter-row">
-<app-slider (sliderChange)="onPanelChange($event)" [data]="{key:'arenaAdjustedShotDistance', header: 'Distance (ft)', min: '0', max: '200', step: '1', start: searchdata.arenaAdjustedShotDistance.start, end: searchdata.arenaAdjustedShotDistance.end}" ></app-slider>
-<app-slider (sliderChange)="onPanelChange($event)" [data]="{key:'shotAngleAdjusted', header: 'ShotAngle (deg)', min: '0', max: '180', step: '1', start: searchdata.shotAngleAdjusted.start, end: searchdata.shotAngleAdjusted.end}" ></app-slider>
+<app-slider (sliderChange)="onPanelChange($event)" [data]="{key:'arenaAdjustedShotDistance', header: 'Distance (ft)', min: '0', max: '100', step: '1', start: searchdata.arenaAdjustedShotDistance.start, end: searchdata.arenaAdjustedShotDistance.end}" ></app-slider>
+<app-slider (sliderChange)="onPanelChange($event)" [data]="{key:'shotAngleAdjusted', header: 'ShotAngle (deg)', min: '0', max: '90', step: '1', start: searchdata.shotAngleAdjusted.start, end: searchdata.shotAngleAdjusted.end}" ></app-slider>
 <app-slider (sliderChange)="onPanelChange($event)" [data]="{key: 'time', header: 'Time (min)', min: '0', max: '80', step: '1', start: searchdata.time.start, end: searchdata.time.end}" ></app-slider>
 </div>
 
@@ -153,7 +153,7 @@
   <mat-label>Name </mat-label>
   <mat-chip-grid #chipGrid aria-label="Enter names">
       
-    <input placeholder="e.g Jason Robertson" #nameInput
+    <input placeholder="" #nameInput
            [matChipInputFor]="chipGrid"
            [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
            [matChipInputAddOnBlur]="addOnBlur"
@@ -204,6 +204,7 @@
 <mat-form-field>
   <mat-label>Period</mat-label>
   <mat-select [value]="searchdata.period" (selectionChange)="onPanelChange({ key: 'period', value : $event.value })">
+    <mat-option value=""></mat-option>
     <mat-option value="1">First</mat-option>
     <mat-option value="2">Second</mat-option>
     <mat-option value="3">Third</mat-option>
@@ -213,6 +214,7 @@
 <mat-form-field>
   <mat-label>Shoots</mat-label>
   <mat-select [value]="searchdata.shooterLeftRight" (selectionChange)="onPanelChange({ key: 'shooterLeftRight', value : $event.value })">
+    <mat-option value=""></mat-option>
     <mat-option value="L">Left</mat-option>
     <mat-option value="R">Right</mat-option>
   </mat-select>
@@ -221,6 +223,7 @@
 <mat-form-field>
   <mat-label>Shot Type</mat-label>
   <mat-select [value]="searchdata.shotType" (selectionChange)="onPanelChange({ key: 'shotType', value : $event.value })">
+    <mat-option value=""></mat-option>
     <mat-option value="SLAP">Slap</mat-option>
     <mat-option value="WRIST">Wrist</mat-option>
     <mat-option value="SNAP">Snap</mat-option>
@@ -232,8 +235,8 @@
 </div>
 
 <div class="filter-row">
-<app-slider (sliderChange)="onPanelChange($event)" [data]="{key:'arenaAdjustedShotDistance', header: 'Distance (ft)', min: '0', max: '200', step: '1', start: searchdata.arenaAdjustedShotDistance.start, end: searchdata.arenaAdjustedShotDistance.end}" ></app-slider>
-<app-slider (sliderChange)="onPanelChange($event)" [data]="{key:'shotAngleAdjusted', header: 'ShotAngle (deg)', min: '0', max: '180', step: '1', start: searchdata.shotAngleAdjusted.start, end: searchdata.shotAngleAdjusted.end}" ></app-slider>
+<app-slider (sliderChange)="onPanelChange($event)" [data]="{key:'arenaAdjustedShotDistance', header: 'Distance (ft)', min: '0', max: '100', step: '1', start: searchdata.arenaAdjustedShotDistance.start, end: searchdata.arenaAdjustedShotDistance.end}" ></app-slider>
+<app-slider (sliderChange)="onPanelChange($event)" [data]="{key:'shotAngleAdjusted', header: 'ShotAngle (deg)', min: '0', max: '90', step: '1', start: searchdata.shotAngleAdjusted.start, end: searchdata.shotAngleAdjusted.end}" ></app-slider>
 <app-slider (sliderChange)="onPanelChange($event)" [data]="{key: 'time', header: 'Time (min)', min: '0', max: '80', step: '1', start: searchdata.time.start, end: searchdata.time.end}" ></app-slider>
 </div>
 

@@ -4,7 +4,10 @@ import {MatSelectModule} from '@angular/material/select';
 import {MatFormFieldModule} from '@angular/material/form-field';
 
 
-
+/**
+ * HeaderComponent represents the header component of the application.
+ * It allows users to select a team from a dropdown list and emits the selected team code.
+ */
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
@@ -18,14 +21,13 @@ import {MatFormFieldModule} from '@angular/material/form-field';
   standalone: true,
 })
 export class HeaderComponent {
-  @Output() teamSelectionChange: EventEmitter<string> = new EventEmitter<
-    string
-  >();
+  @Output() teamSelectionChange: EventEmitter<string> =
+    new EventEmitter<string>();
 
   teams = new FormControl('');
 
   teamList: { name: string; teamCode: string }[] = [
-    { name: 'Anaheim Ducks', teamCode: 'ANA'},
+    { name: 'Anaheim Ducks', teamCode: 'ANA' },
     { name: 'Arizona Coyotes', teamCode: 'ARI' },
     { name: 'Boston Bruins', teamCode: 'BOS' },
     { name: 'Buffalo Sabres', teamCode: 'BUF' },
@@ -59,6 +61,12 @@ export class HeaderComponent {
     { name: 'Winnipeg Jets', teamCode: 'WPG' },
   ];
 
+  /**
+   * Handles the change event when the selected team changes.
+   * Emits the selected team code.
+   *
+   * @param event - The event object containing the selected team value
+   */
   handleTeamSelectionChange(event: any): void {
     this.teamSelectionChange.emit(event.value);
   }

@@ -2,8 +2,8 @@
   <div class="container">
     <h1>NHL Team Goal Statistics 2023-2024 season</h1>
     <mat-form-field>
-  <mat-label>Select a team</mat-label>
-  <mat-select (selectionChange)="handleTeamSelectionChange($event)" [formControl]="teams" >
+  <mat-label>Select team(s)</mat-label>
+  <mat-select multiple (selectionChange)="handleTeamSelectionChange($event)" [formControl]="teams" >
     @for (team of teamList; track team) {
       <mat-option [value]="team.teamCode">{{team.name}}</mat-option>
     }

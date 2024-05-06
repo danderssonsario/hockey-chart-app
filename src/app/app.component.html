@@ -1,6 +1,6 @@
 ﻿<div class="container">
 <app-header (teamSelectionChange)="getGoalsByTeam($event)"></app-header>
-<app-panel [reset]="resetPanel" [disabled]="disabledPanel" [facets]="facets" #searchData (changeEvent)="receiveSearchData($event)"></app-panel>
+<app-panel [disabled]="disabledPanel" [facets]="facets" #searchData (changeEvent)="receiveSearchData($event)"></app-panel>
 
 @if (isLoading) {
         <mat-card-content>
@@ -11,7 +11,7 @@
 } 
 
 
-<app-scatter-chart #elseBlock [chartData]="chartData"></app-scatter-chart>
+<app-scatter-chart #elseBlock [chartDatasets]="chartDatasets"></app-scatter-chart>
 
 
 
