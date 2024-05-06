@@ -116,7 +116,7 @@ export class AppComponent {
       this.isLoading = true;
       const param = new URLSearchParams(params).toString();
       const response = await fetch(
-        `http://localhost:5207/indexes/goals?${param}`
+        `https://api20240419093055.azurewebsites.net/indexes/goals?${param}`
       );
 
       if (!response.ok) {
@@ -139,7 +139,7 @@ export class AppComponent {
         .map((team) => `teamCodes=${encodeURIComponent(team)}`)
         .join('&');
       const response = await fetch(
-        `http://localhost:5207/indexes/goals/facets?${queryString}`
+        `https://api20240419093055.azurewebsites.net/indexes/goals/facets?${queryString}`
       );
 
       if (!response.ok) {
