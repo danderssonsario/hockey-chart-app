@@ -70,7 +70,7 @@ export class ScatterChartComponent implements OnChanges {
       this.chartDatasets.forEach((teamData) => {
         const dataset = {
           data: teamData.data.map((point: Data) => ({
-            x: +point.arenaAdjustedXCordABS + 265,
+            x: +point.arenaAdjustedXCordABS + 135,
             y: +point.arenaAdjustedYCordABS + 50,
           })),
           label: teamData.teamCode,
@@ -91,7 +91,7 @@ export class ScatterChartComponent implements OnChanges {
       x: {
         display: false,
         min: 0,
-        max: 400,
+        max: 250,
         grid: {
           display: false,
         },
