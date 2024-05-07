@@ -119,6 +119,7 @@ export class PanelComponent {
    * Updates the facets.
    */
   updateOfFacetCount(): void {
+    console.log(this.facets)
     this.ofReboundFacet = this.facets.find(
       (facet) => facet.field === 'ShotRebound' && facet.value === 'True'
     );
@@ -126,7 +127,7 @@ export class PanelComponent {
       (facet) => facet.field === 'ShotOnEmptyNet' && facet.value === 'True'
     );
     this.playoffFacet = this.facets.find(
-      (facet) => facet.field === 'IsPlayOffGame' && facet.value === 'True'
+      (facet) => facet.field === 'IsPlayoffGame' && facet.value === 'True'
     );
     this.powerplayFacet = this.facets.find(
       (facet) => facet.field === 'IsPowerPlay' && facet.value === 'True'
